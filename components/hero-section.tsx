@@ -1,10 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
 import { HeroHeader } from './header';
-import { InfiniteSlider } from '@/components/ui/infinite-slider';
-import { ProgressiveBlur } from '@/components/ui/progressive-blur';
+import Coin3D from '@/components/coin3d';
 
 export default function HeroSection() {
   return (
@@ -25,14 +23,11 @@ export default function HeroSection() {
                       <span className="text-nowrap">Apply Here</span>
                     </Link>
                   </Button>
-                  {/* <Button key={2} asChild size="lg" variant="ghost" className="px-5 text-base">
-                    <Link href="#link">
-                      <span className="text-nowrap">Apply Here</span>
-                    </Link>
-                  </Button> */}
                 </div>
               </div>
-              <Image className="-z-10 order-first ml-auto h-56 w-full object-cover invert sm:h-96 lg:absolute lg:inset-0 lg:-right-20 lg:-top-80 lg:order-last lg:h-[125%] lg:w-2/3 lg:object-contain dark:mix-blend-lighten dark:invert-0" src="https://ik.imagekit.io/lrigu76hy/tailark/abstract-bg.jpg?updatedAt=1745733473768" alt="Abstract Object" height="4000" width="3000" />
+
+              {/* --- Replaced Image with Spline --- */}
+              <Coin3D />
             </div>
           </div>
         </section>

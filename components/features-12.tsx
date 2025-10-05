@@ -1,6 +1,7 @@
 'use client';
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ChartBarIncreasingIcon, Database, Fingerprint, IdCard } from 'lucide-react';
+import { HeartPulse, PiggyBank, Leaf, GraduationCap } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -10,22 +11,10 @@ export default function Features() {
   const [activeItem, setActiveItem] = useState<ImageKey>('item-1');
 
   const images = {
-    'item-1': {
-      image: '/charts.png',
-      alt: 'Database visualization',
-    },
-    'item-2': {
-      image: '/music.png',
-      alt: 'Security authentication',
-    },
-    'item-3': {
-      image: '/mail2.png',
-      alt: 'Identity management',
-    },
-    'item-4': {
-      image: '/payments.png',
-      alt: 'Analytics dashboard',
-    },
+    'item-1': { image: '/tracks/healthcare.jpg', alt: 'Healthcare Technology' },
+    'item-2': { image: '/fintech.png', alt: 'Fintech Innovation' },
+    'item-3': { image: '/sustainability.png', alt: 'Sustainability Solutions' },
+    'item-4': { image: '/education.png', alt: 'Education Innovation' },
   };
 
   return (
@@ -33,8 +22,8 @@ export default function Features() {
       <div className="bg-linear-to-b absolute inset-0 -z-10 sm:inset-6 sm:rounded-b-3xl dark:block dark:to-[color-mix(in_oklab,var(--color-zinc-900)_75%,var(--color-background))]"></div>
       <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
         <div className="relative z-10 mx-auto max-w-2xl space-y-6 text-center">
-          <h2 className="text-balance text-4xl font-semibold lg:text-6xl">The foundation for AI</h2>
-          <p>Lyra is evolving to be more than just the models. It supports an entire to the APIs and platforms helping developers and businesses innovate.</p>
+          <h2 className="text-balance text-4xl font-semibold lg:text-6xl">TRACKS</h2>
+          <p>Our hackathon highlights four focus areas shaping the future — each track challenges you to create impactful, forward-thinking solutions that solve real-world problems.</p>
         </div>
 
         <div className="grid gap-12 sm:px-12 md:grid-cols-2 lg:gap-20 lg:px-0">
@@ -42,38 +31,41 @@ export default function Features() {
             <AccordionItem value="item-1">
               <AccordionTrigger>
                 <div className="flex items-center gap-2 text-base">
-                  <Database className="size-4" />
-                  Database Visualization
+                  <HeartPulse className="size-4" />
+                  Healthcare
                 </div>
               </AccordionTrigger>
-              <AccordionContent>Lyra is evolving to be more than just the models. It supports an entire to the APIs and platforms helping developers and businesses innovate.</AccordionContent>
+              <AccordionContent>Reimagine wellness and care accessibility — from personalized health dashboards to AI-assisted diagnostics improving global healthcare outcomes.</AccordionContent>
             </AccordionItem>
+
             <AccordionItem value="item-2">
               <AccordionTrigger>
                 <div className="flex items-center gap-2 text-base">
-                  <Fingerprint className="size-4" />
-                  Advanced Authentication
+                  <PiggyBank className="size-4" />
+                  Financial Technology
                 </div>
               </AccordionTrigger>
-              <AccordionContent>Lyra is evolving to be more than just the models. It supports an entire to the APIs and platforms helping developers and businesses innovate.</AccordionContent>
+              <AccordionContent>Build smarter, safer, and more inclusive financial tools — from AI-driven budgeting to blockchain-powered transparency — shaping how we save, invest, and trade.</AccordionContent>
             </AccordionItem>
+
             <AccordionItem value="item-3">
               <AccordionTrigger>
                 <div className="flex items-center gap-2 text-base">
-                  <IdCard className="size-4" />
-                  Identity Management
+                  <Leaf className="size-4" />
+                  Sustainability
                 </div>
               </AccordionTrigger>
-              <AccordionContent>Lyra is evolving to be more than just the models. It supports an entire to the APIs and platforms helping developers and businesses innovate.</AccordionContent>
+              <AccordionContent>Develop solutions for a cleaner, more sustainable planet — energy tracking apps, waste reduction systems, or innovative tools that empower green lifestyles.</AccordionContent>
             </AccordionItem>
+
             <AccordionItem value="item-4">
               <AccordionTrigger>
                 <div className="flex items-center gap-2 text-base">
-                  <ChartBarIncreasingIcon className="size-4" />
-                  Analytics Dashboard
+                  <GraduationCap className="size-4" />
+                  Education
                 </div>
               </AccordionTrigger>
-              <AccordionContent>Lyra is evolving to be more than just the models. It supports an entire to the APIs and platforms helping developers and businesses innovate.</AccordionContent>
+              <AccordionContent>Transform how people learn through gamified apps, adaptive tutoring systems, and collaborative tools that make education more engaging and equitable.</AccordionContent>
             </AccordionItem>
           </Accordion>
 
