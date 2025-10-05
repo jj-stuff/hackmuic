@@ -1,40 +1,60 @@
-'use client';
+// components/Coin3D.tsx
+"use client";
 
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
-import { Suspense, useRef } from 'react';
-import * as THREE from 'three';
+import React, { Suspense, useRef } from "react";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import * as THREE from "three";
 
 const COIN_RADIUS = 1;
 const COIN_THICKNESS = 0.12;
 const COIN_SCALE = 0.55;
 
 function CoinMesh() {
-  const logoTexture = useLoader(THREE.TextureLoader, '/logo/muic-noname.png');
+  // useLoader infers the return type from loader, here TextureLoader → THREE.Texture
+  const logoTexture = useLoader(THREE.TextureLoader, "/logo/muic-noname.png");
+
+  // set texture properties
   logoTexture.colorSpace = THREE.SRGBColorSpace;
   logoTexture.anisotropy = 8;
 
-  const group = useRef<THREE.Group>(null);
-  const spin = useRef(0);
+  // ref to the group
+  const groupRef = useRef<THREE.Group>(null);
 
-  useFrame((_, delta) => {
-    if (!group.current) return;
+  // spin as a mutable ref (so it remains between frames)
+  const spin = useRef<number>(0);
+
+  useFrame((state, delta) => {
+    if (!groupRef.current) return;
     const speed = 0.85;
     spin.current += delta * speed;
     const tilt = Math.sin(spin.current * 0.6) * 0.2;
-    group.current.rotation.set(Math.PI / 2 - 1 + tilt, spin.current, Math.sin(spin.current * 0.9) * 0.12);
+    groupRef.current.rotation.set(
+      Math.PI / 2 - 1 + tilt,
+      spin.current,
+      Math.sin(spin.current * 0.9) * 0.12,
+    );
   });
 
   return (
-    <group ref={group} position={[0, 0.18, 0]} scale={COIN_SCALE}>
-      {/* Use a basic (unlit) material so it ignores all lighting */}
+    <group ref={groupRef} position={[0, 0.18, 0]} scale={COIN_SCALE}>
       <mesh>
-        <cylinderGeometry args={[COIN_RADIUS, COIN_RADIUS, COIN_THICKNESS, 128]} />
-        {/* Edge — deep purple */}
+        <cylinderGeometry
+          args={[COIN_RADIUS, COIN_RADIUS, COIN_THICKNESS, 128]}
+        />
+        {/* The cylinder has 3 “sides”: side, top, bottom — assign materials */}
         <meshBasicMaterial attach="material-0" color="#5e1a75" />
-        {/* Front face — purple with logo texture overlay */}
-        <meshBasicMaterial attach="material-1" color="#fffff" map={logoTexture} toneMapped={false} />
-        {/* Back face — same */}
-        <meshBasicMaterial attach="material-2" color="#b82fd4" map={logoTexture} toneMapped={false} />
+        <meshBasicMaterial
+          attach="material-1"
+          color="#ffffff"
+          map={logoTexture}
+          toneMapped={false}
+        />
+        <meshBasicMaterial
+          attach="material-2"
+          color="#b82fd4"
+          map={logoTexture}
+          toneMapped={false}
+        />
       </mesh>
     </group>
   );
@@ -48,10 +68,15 @@ export default function HeroCoin() {
           className="h-full w-full"
           shadows={false}
           camera={{ position: [0, 0, 3], fov: 45, near: 0.1, far: 100 }}
-          gl={{ antialias: true, alpha: true }}
+          gl={{
+            antialias: true,
+            alpha: true,
+            // set output color space, allowed in recent versions of three / r3f
+            outputColorSpace: THREE.SRGBColorSpace,
+          }}
           onCreated={({ gl }) => {
-            gl.setClearColor('#000000', 0);
-            gl.outputColorSpace = THREE.SRGBColorSpace;
+            // set background to transparent
+            gl.setClearColor("#000000", 0);
           }}
         >
           <Suspense fallback={null}>
