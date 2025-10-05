@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 /**
  * @file auth-actions.ts
@@ -14,10 +14,9 @@
  *   - Optional invite validation via `checkInviteForEmail`
  */
 
-import { redirect } from 'next/navigation';
-import { headers } from 'next/headers';
-import { auth } from '../auth';
-import { checkInviteForEmail, markInviteAccepted } from './invite-actions';
+import { redirect } from "next/navigation";
+import { headers } from "next/headers";
+import { auth } from "../auth";
 
 /**
  * @function signUp
@@ -25,23 +24,15 @@ import { checkInviteForEmail, markInviteAccepted } from './invite-actions';
  * Optionally checks for a valid invite before creating the user.
  */
 export const signUp = async (email: string, password: string, name: string) => {
-  const invite = await checkInviteForEmail(email);
-  if (!invite) {
-    throw new Error('No valid invite found for this email.');
-  }
-
   // Perform sign-up via Better Auth API
   const result = await auth.api.signUpEmail({
     body: {
       email,
       password,
       name,
-      callbackURL: '/dashboard',
+      callbackURL: "/dashboard",
     },
   });
-
-  // Better Auth manages persistence, but we still mark the invite as used
-  await markInviteAccepted(email);
 
   return result;
 };
@@ -55,7 +46,7 @@ export const signIn = async (email: string, password: string) => {
     body: {
       email,
       password,
-      callbackURL: '/dashboard',
+      callbackURL: "/dashboard",
     },
   });
 
@@ -66,11 +57,11 @@ export const signIn = async (email: string, password: string) => {
  * @function signInSocial
  * @description Sign in using a social provider (e.g., Google).
  */
-export const signInSocial = async (provider: 'google') => {
+export const signInSocial = async (provider: "google") => {
   const { url } = await auth.api.signInSocial({
     body: {
       provider,
-      callbackURL: '/dashboard',
+      callbackURL: "/dashboard",
     },
   });
 
