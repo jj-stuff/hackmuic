@@ -1,10 +1,11 @@
 "use client";
 import { signOut } from "@/lib/actions/auth-actions";
-import { auth } from "@/lib/auth";
+import type { AuthSession } from "@/lib/auth";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-type Session = typeof auth.$Infer.Session;
+type Session = AuthSession;
 
 export default function DashboardClientPage({ session }: { session: Session }) {
   const router = useRouter();
@@ -32,11 +33,12 @@ export default function DashboardClientPage({ session }: { session: Session }) {
               </div>
               <div className="flex items-center space-x-3">
                 <div className="flex items-center space-x-3">
-                  <img
+                  <Image
                     className="h-10 w-10 rounded-full"
-                    src={
-                      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
-                    }
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+                    alt="User avatar"
+                    width={40}
+                    height={40}
                   />
                   <div className="text-sm">
                     <p className="text-gray-900 font-medium">{user.name}</p>

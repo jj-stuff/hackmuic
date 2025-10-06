@@ -1,12 +1,11 @@
-import type { NextConfig } from 'next';
-import { hostname } from 'os';
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: 'ik.imagekit.io',
-        protocol: 'https',
+        hostname: "ik.imagekit.io",
+        protocol: "https",
       },
     ],
   },
