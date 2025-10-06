@@ -1,10 +1,16 @@
-export default function AdminPage() {
-  return (
-    <main className="mx-auto flex max-w-2xl flex-col gap-4 py-16 px-6">
-      <h1 className="text-3xl font-semibold">Admin Area Disabled</h1>
-      <p className="text-muted-foreground">
-        The admin tools will return once authentication is available again.
-      </p>
-    </main>
-  );
+import { auth } from "@/lib/auth";
+import DashboardClientPage from "./admin-client";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+
+export default async function DashboardPage() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    redirect("/auth");
+  }
+
+  return <DashboardClientPage session={session} />;
 }

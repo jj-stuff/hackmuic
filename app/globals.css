@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -76,9 +76,9 @@
   --sidebar-accent-foreground: oklch(0.2781 0.1425 305.532);
   --sidebar-border: oklch(0.3374 0.1724 306.947);
   --sidebar-ring: oklch(0.7505 0.1791 58.2827);
-  --font-sans: 'Montserrat', sans-serif;
-  --font-serif: 'Playfair Display', serif;
-  --font-mono: 'Fira Code', monospace;
+  --font-sans: "Montserrat", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-mono: "Fira Code", monospace;
   --radius: 0.5rem;
   --shadow-x: 0rem;
   --shadow-y: 0.25rem;
@@ -88,11 +88,21 @@
   --shadow-color: #3a015e;
   --shadow-2xs: 0rem 0.25rem 0.5rem 0rem hsl(276.7742 97.8947% 18.6275% / 0.05);
   --shadow-xs: 0rem 0.25rem 0.5rem 0rem hsl(276.7742 97.8947% 18.6275% / 0.05);
-  --shadow-sm: 0rem 0.25rem 0.5rem 0rem hsl(276.7742 97.8947% 18.6275% / 0.1), 0rem 1px 2px -1px hsl(276.7742 97.8947% 18.6275% / 0.1);
-  --shadow: 0rem 0.25rem 0.5rem 0rem hsl(276.7742 97.8947% 18.6275% / 0.1), 0rem 1px 2px -1px hsl(276.7742 97.8947% 18.6275% / 0.1);
-  --shadow-md: 0rem 0.25rem 0.5rem 0rem hsl(276.7742 97.8947% 18.6275% / 0.1), 0rem 2px 4px -1px hsl(276.7742 97.8947% 18.6275% / 0.1);
-  --shadow-lg: 0rem 0.25rem 0.5rem 0rem hsl(276.7742 97.8947% 18.6275% / 0.1), 0rem 4px 6px -1px hsl(276.7742 97.8947% 18.6275% / 0.1);
-  --shadow-xl: 0rem 0.25rem 0.5rem 0rem hsl(276.7742 97.8947% 18.6275% / 0.1), 0rem 8px 10px -1px hsl(276.7742 97.8947% 18.6275% / 0.1);
+  --shadow-sm:
+    0rem 0.25rem 0.5rem 0rem hsl(276.7742 97.8947% 18.6275% / 0.1),
+    0rem 1px 2px -1px hsl(276.7742 97.8947% 18.6275% / 0.1);
+  --shadow:
+    0rem 0.25rem 0.5rem 0rem hsl(276.7742 97.8947% 18.6275% / 0.1),
+    0rem 1px 2px -1px hsl(276.7742 97.8947% 18.6275% / 0.1);
+  --shadow-md:
+    0rem 0.25rem 0.5rem 0rem hsl(276.7742 97.8947% 18.6275% / 0.1),
+    0rem 2px 4px -1px hsl(276.7742 97.8947% 18.6275% / 0.1);
+  --shadow-lg:
+    0rem 0.25rem 0.5rem 0rem hsl(276.7742 97.8947% 18.6275% / 0.1),
+    0rem 4px 6px -1px hsl(276.7742 97.8947% 18.6275% / 0.1);
+  --shadow-xl:
+    0rem 0.25rem 0.5rem 0rem hsl(276.7742 97.8947% 18.6275% / 0.1),
+    0rem 8px 10px -1px hsl(276.7742 97.8947% 18.6275% / 0.1);
   --shadow-2xl: 0rem 0.25rem 0.5rem 0rem hsl(276.7742 97.8947% 18.6275% / 0.25);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
@@ -100,7 +110,7 @@
 
 .dark {
   --background: oklch(0.1955 0.1031 302.267);
-  --foreground: oklch(0.9401 0 0);
+  --foreground: rgb(255, 246, 232);
   --card: oklch(0.2856 0.1509 301.9053);
   --card-foreground: oklch(0.9401 0 0);
   --popover: oklch(0.2856 0.1509 301.9053);
@@ -131,9 +141,9 @@
   --sidebar-accent-foreground: oklch(0.9401 0 0);
   --sidebar-border: oklch(0.3368 0.1731 307.0144);
   --sidebar-ring: oklch(0.8179 0.1705 77.9481);
-  --font-sans: 'Montserrat', sans-serif;
-  --font-serif: 'Playfair Display', serif;
-  --font-mono: 'Fira Code', monospace;
+  --font-sans: "Montserrat", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-mono: "Fira Code", monospace;
   --radius: 0.5rem;
   --shadow-x: 0rem;
   --shadow-y: 0.5rem;
@@ -143,11 +153,21 @@
   --shadow-color: #000000;
   --shadow-2xs: 0rem 0.5rem 0.75rem 0rem hsl(0 0% 0% / 0.2);
   --shadow-xs: 0rem 0.5rem 0.75rem 0rem hsl(0 0% 0% / 0.2);
-  --shadow-sm: 0rem 0.5rem 0.75rem 0rem hsl(0 0% 0% / 0.4), 0rem 1px 2px -1px hsl(0 0% 0% / 0.4);
-  --shadow: 0rem 0.5rem 0.75rem 0rem hsl(0 0% 0% / 0.4), 0rem 1px 2px -1px hsl(0 0% 0% / 0.4);
-  --shadow-md: 0rem 0.5rem 0.75rem 0rem hsl(0 0% 0% / 0.4), 0rem 2px 4px -1px hsl(0 0% 0% / 0.4);
-  --shadow-lg: 0rem 0.5rem 0.75rem 0rem hsl(0 0% 0% / 0.4), 0rem 4px 6px -1px hsl(0 0% 0% / 0.4);
-  --shadow-xl: 0rem 0.5rem 0.75rem 0rem hsl(0 0% 0% / 0.4), 0rem 8px 10px -1px hsl(0 0% 0% / 0.4);
+  --shadow-sm:
+    0rem 0.5rem 0.75rem 0rem hsl(0 0% 0% / 0.4),
+    0rem 1px 2px -1px hsl(0 0% 0% / 0.4);
+  --shadow:
+    0rem 0.5rem 0.75rem 0rem hsl(0 0% 0% / 0.4),
+    0rem 1px 2px -1px hsl(0 0% 0% / 0.4);
+  --shadow-md:
+    0rem 0.5rem 0.75rem 0rem hsl(0 0% 0% / 0.4),
+    0rem 2px 4px -1px hsl(0 0% 0% / 0.4);
+  --shadow-lg:
+    0rem 0.5rem 0.75rem 0rem hsl(0 0% 0% / 0.4),
+    0rem 4px 6px -1px hsl(0 0% 0% / 0.4);
+  --shadow-xl:
+    0rem 0.5rem 0.75rem 0rem hsl(0 0% 0% / 0.4),
+    0rem 8px 10px -1px hsl(0 0% 0% / 0.4);
   --shadow-2xl: 0rem 0.5rem 0.75rem 0rem hsl(0 0% 0% / 1);
 }
 
@@ -214,7 +234,7 @@
 }
 
 .bg {
-  background-image: url('/backgrounds/glass.png');
+  background-image: url("/backgrounds/glass.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
