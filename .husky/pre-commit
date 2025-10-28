@@ -1,5 +1,0 @@
-
-echo "🔍 Running lint-staged + typecheck + prisma generate..."
-npx prisma generate
-npx lint-staged
-pnpm run typecheck

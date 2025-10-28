@@ -12,9 +12,9 @@ export default function Features() {
 
   const images = {
     'item-1': { image: '/tracks/healthcare.jpg', alt: 'Healthcare Technology' },
-    'item-2': { image: '/fintech.png', alt: 'Fintech Innovation' },
-    'item-3': { image: '/sustainability.png', alt: 'Sustainability Solutions' },
-    'item-4': { image: '/education.png', alt: 'Education Innovation' },
+    'item-2': { image: '/tracks/fintech.webp', alt: 'Fintech Innovation' },
+    'item-3': { image: '/tracks/sustainability.jpg', alt: 'Sustainability Solutions' },
+    'item-4': { image: '/tracks/education.jpg', alt: 'Education Innovation' },
   };
 
   return (
@@ -70,11 +70,23 @@ export default function Features() {
           </Accordion>
 
           <div className="bg-background relative flex overflow-hidden rounded-3xl border p-2">
-            <div className="w-15 absolute inset-0 right-0 ml-auto border-l bg-[repeating-linear-gradient(-45deg,var(--color-border),var(--color-border)_1px,transparent_1px,transparent_8px)]"></div>
-            <div className="aspect-76/59 bg-background relative w-[calc(3/4*100%+3rem)] rounded-2xl">
+            <div className="bg-background relative w-full rounded-2xl">
               <AnimatePresence mode="wait">
-                <motion.div key={`${activeItem}-id`} initial={{ opacity: 0, y: 6, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 6, scale: 0.98 }} transition={{ duration: 0.2 }} className="size-full overflow-hidden rounded-2xl border bg-zinc-900 shadow-md">
-                  <Image src={images[activeItem].image} className="size-full object-cover object-left-top dark:mix-blend-lighten" alt={images[activeItem].alt} width={1207} height={929} />
+                <motion.div
+                  key={`${activeItem}-id`}
+                  initial={{ opacity: 0, y: 6, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
+                  className="relative w-full overflow-hidden rounded-2xl border bg-zinc-900 shadow-md aspect-[16/9]"
+                >
+                  <Image
+                    src={images[activeItem].image}
+                    alt={images[activeItem].alt}
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover object-left-top dark:mix-blend-lighten"
+                  />
                 </motion.div>
               </AnimatePresence>
             </div>

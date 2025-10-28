@@ -1,21 +1,29 @@
+<<<<<<< HEAD
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { PrismaClient } from "@prisma/client";
 import { nextCookies } from "better-auth/next-js";
+=======
+import { betterAuth } from 'better-auth';
+import { prismaAdapter } from 'better-auth/adapters/prisma';
+import { PrismaClient } from '@prisma/client';
+import { nextCookies } from 'better-auth/next-js';
 
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient();
+>>>>>>> parent of 17069b6 (Testing Auth)
+
 export const auth = betterAuth({
-  database: prismaAdapter(prisma, { provider: "postgresql" }),
+  database: prismaAdapter(prisma, { provider: 'postgresql' }),
   emailAndPassword: {
     enabled: true,
   },
   socialProviders: {
     google: {
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: '',
+      clientSecret: '',
     },
   },
-  plugins: [nextCookies()],
+  plugins: [nextCookies()], // next cookies should always come last
 });
 
 export type AuthSession = typeof auth.$Infer.Session;

@@ -65,7 +65,7 @@ export default function FAQsTwo() {
           <p className="text-muted-foreground mt-6 px-8 text-center">
             Still have questions? Reach out to our{' '}
             <Link href="#" className="text-primary font-medium hover:underline">
-              organizing team
+              discord server
             </Link>{' '}
             and we’ll be happy to help.
           </p>

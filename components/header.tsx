@@ -1,31 +1,29 @@
-"use client";
-import Link from "next/link";
-import { Menu, X } from "lucide-react";
-import React from "react";
+'use client';
+import Link from 'next/link';
+import { Menu, X } from 'lucide-react';
+import React from 'react';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { Button } from '@/components/ui/button';
+import { siteCtas } from '@/lib/site-config';
 
 const menuItems = [
-  { name: "Tracks", href: "#link" },
-  { name: "Team", href: "#link" },
-  { name: "FAQ", href: "#link" },
-  { name: "About", href: "#link" },
+  { name: 'Tracks', href: '/#features' },
+  { name: 'Team', href: '/#team' },
+  { name: 'FAQ', href: '/#faq' },
+  { name: 'About', href: '/#hero' },
+  { name: 'Sponsors', href: '/sponsors' },
 ];
 
-export const HeroHeader = () => {
+export const HeaderSection = () => {
   const [menuState, setMenuState] = React.useState(false);
+  const { label, href } = siteCtas.apply;
   return (
     <header>
-      <nav
-        data-state={menuState && "active"}
-        className="bg-background/50 fixed z-20 w-full border-b backdrop-blur-3xl"
-      >
+      <nav data-state={menuState && 'active'} className="bg-background/50 fixed z-20 w-full border-b backdrop-blur-3xl">
         <div className="mx-auto max-w-6xl px-6 transition-all duration-300">
           <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
             <div className="flex w-full items-center justify-between gap-12 lg:w-auto">
-              <button
-                onClick={() => setMenuState(!menuState)}
-                aria-label={menuState == true ? "Close Menu" : "Open Menu"}
-                className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden"
-              >
+              <button onClick={() => setMenuState(!menuState)} aria-label={menuState == true ? 'Close Menu' : 'Open Menu'} className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden">
                 <Menu className="in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 m-auto size-6 duration-200" />
                 <X className="in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 absolute inset-0 m-auto size-6 -rotate-180 scale-0 opacity-0 duration-200" />
               </button>
@@ -34,10 +32,7 @@ export const HeroHeader = () => {
                 <ul className="flex gap-8 text-sm">
                   {menuItems.map((item, index) => (
                     <li key={index}>
-                      <Link
-                        href={item.href}
-                        className="text-muted-foreground hover:text-accent-foreground block duration-150"
-                      >
+                      <Link href={item.href} className="text-muted-foreground hover:text-accent-foreground block duration-150">
                         <span>{item.name}</span>
                       </Link>
                     </li>
@@ -51,15 +46,20 @@ export const HeroHeader = () => {
                 <ul className="space-y-6 text-base">
                   {menuItems.map((item, index) => (
                     <li key={index}>
-                      <Link
-                        href={item.href}
-                        className="text-muted-foreground hover:text-accent-foreground block duration-150"
-                      >
+                      <Link href={item.href} className="text-muted-foreground hover:text-accent-foreground block duration-150">
                         <span>{item.name}</span>
                       </Link>
                     </li>
                   ))}
                 </ul>
+              </div>
+              <div className="flex w-full items-center justify-end gap-3 lg:w-auto">
+                <Button asChild size="sm">
+                  <Link href={href}>
+                    <span className="text-nowrap">{label}</span>
+                  </Link>
+                </Button>
+                <ThemeToggle />
               </div>
             </div>
           </div>

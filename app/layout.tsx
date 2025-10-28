@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
-import { Cabin } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import type { Metadata } from 'next';
+import { Montserrat } from 'next/font/google';
+import './globals.css';
+import { ThemeProvider } from '@/components/theme-provider';
 
-const cabin = Cabin({ subsets: ["latin"], weight: "400" });
+const montserrat = Montserrat({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "HackMUIC 2026",
-  description: "HackMUIC is a hackathon club at MUIC in Salaya, Mahidol Campus",
+  title: 'HackMUIC 2026',
+  description: 'HackMUIC is a hackathon club at MUIC in Salaya, Mahidol Campus',
 };
 
 export default function RootLayout({
@@ -17,15 +17,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cabin.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+      <body className={montserrat.className}>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
