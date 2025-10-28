@@ -1,9 +1,9 @@
 import FAQsTwo from '@/components/faqs-2';
 import Features from '@/components/tracks';
 import FooterSection from '@/components/footer';
-import HeroSection from '@/components/hero-section';
-import TeamSection from '@/components/team1';
-
+import HeroSection from '@/components/hero';
+import TeamSection from '@/components/team';
+import { MorphingText } from '@/components/ui/morphing-text';
 const HomePage = () => {
   return (
     <main>

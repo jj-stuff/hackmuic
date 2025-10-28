@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../lib/generated/prisma"
@@ -12,17 +6,17 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // =============================================================
 // ENUMS
 // =============================================================
 
-// Role-based access control for different user permissions
 enum Role {
-  USER    // default for normal users
-  ADMIN   // has dashboard editing permissions
-  OWNER   // super-admin; can manage invites and admins
+  USER
+  ADMIN
+  OWNER
 }
 
 // =============================================================
@@ -30,40 +24,39 @@ enum Role {
 // =============================================================
 
 model User {
-  id            String    @id // UUID or custom user id (Better Auth will manage this)
-  name          String // Display name
-  email         String // Unique email (used for login)
-  emailVerified Boolean   @default(false) // Has verified email address?
-  image         String? // Profile picture (optional)
-  createdAt     DateTime  @default(now()) // Account creation timestamp
-  updatedAt     DateTime  @default(now()) @updatedAt // Auto-updates on edit
+  id            String    @id @default(cuid())           // 🆕 ensure auto id generation
+  name          String?
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   // Relations
-  sessions      Session[] // Active login sessions
-  accounts      Account[] // Linked auth providers
+  sessions      Session[]
+  accounts      Account[]
 
-  // Role-based access
-  role          Role      @default(USER) // Defines permissions (USER, ADMIN, OWNER)
+  // Access control
+  role          Role      @default(USER)
+  invites       Invite[]  @relation("InvitedBy")        // 🆕 optional reverse relation
 
-  @@unique([email]) // Enforce unique email addresses
-  @@map("user") // Optional table name mapping
+  @@map("user")
 }
 
 // -------------------------------------------------------------
-// Active user sessions
+// Active sessions
 // -------------------------------------------------------------
 model Session {
-  id         String   @id                           // Unique session ID
-  expiresAt  DateTime                               // Session expiration timestamp
-  token      String                                 // Session token
-  createdAt  DateTime @default(now())               // Creation time
-  updatedAt  DateTime @updatedAt                    // Auto-updated
-  ipAddress  String?                                // Optional IP (for logging)
-  userAgent  String?                                // Optional user agent info
-  userId     String                                 // Linked user
+  id         String   @id @default(cuid())               // 🆕 ensure cuid()
+  expiresAt  DateTime
+  token      String   @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  ipAddress  String?
+  userAgent  String?
+  userId     String
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token]) // Prevent duplicate tokens
   @@map("session")
 }
 
@@ -71,20 +64,19 @@ model Session {
 // OAuth / Local account connections
 // -------------------------------------------------------------
 model Account {
-  id                    String    @id
-  accountId             String // ID from provider (e.g., Google account id)
-  providerId            String // Name of provider (e.g., 'google')
-  userId                String // Linked user id
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                    String   @id @default(cuid())    // 🆕 cuid() for unique ID
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  // Tokens (only some apply depending on provider)
   accessToken           String?
   refreshToken          String?
   idToken               String?
   accessTokenExpiresAt  DateTime?
   refreshTokenExpiresAt DateTime?
   scope                 String?
-  password              String? // For email/password logins
+  password              String?
 
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
@@ -95,28 +87,69 @@ model Account {
 // -------------------------------------------------------------
 // Email verification / password reset tracking
 // -------------------------------------------------------------
-model Verification {
-  id          String   @id
-  identifier  String // Email or user identifier
-  value       String // Token or verification code
-  expiresAt   DateTime // Expiration timestamp
+model VerificationToken {                             // 🧹 renamed for consistency
+  id          String   @id @default(cuid())
+  identifier  String
+  value       String
+  expiresAt   DateTime
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
+  updatedAt   DateTime @updatedAt
 
-  @@map("verification")
+  @@unique([identifier, value])                       // 🆕 prevent duplicate tokens
+  @@map("verification_token")
 }
 
 // -------------------------------------------------------------
-// Invite-only admin onboarding
+// Invite-only onboarding
 // -------------------------------------------------------------
 model Invite {
-  id         String   @id @default(cuid())         // Unique invite ID
-  email      String   @unique                      // Email being invited
-  role       Role     @default(USER)               // Role to grant (usually ADMIN)
-  inviteCode String   @unique                      // Unique random string for invite link
-  expiresAt  DateTime                              // Expiration date of invite
-  accepted   Boolean  @default(false)              // Has the invite been used?
-  createdAt  DateTime @default(now())              // When invite was created
+  id         String   @id @default(cuid())
+  email      String   @unique
+  role       Role     @default(USER)
+  inviteCode String   @unique
+  expiresAt  DateTime
+  accepted   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  invitedBy  User?    @relation("InvitedBy", fields: [invitedById], references: [id]) // 🆕 optional
+  invitedById String?
 
   @@map("invite")
+}
+
+// =============================================================
+// CMS MODELS
+// =============================================================
+
+// 🆕 Manage hackathon team members
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  imageUrl  String?
+  bio       String?
+  order     Int?     // optional ordering
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 🆕 Manage hackathon event schedule
+model Schedule {
+  id        String   @id @default(cuid())
+  title     String
+  startTime DateTime
+  endTime   DateTime?
+  location  String?
+  day       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 🆕 Generic key-value CMS content (for hero text, footer text, etc.)
+model Content {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 }

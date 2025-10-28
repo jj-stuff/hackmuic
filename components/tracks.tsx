@@ -5,6 +5,7 @@ import { HeartPulse, PiggyBank, Leaf, GraduationCap } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { MorphingText } from '@/components/ui/morphing-text';
 
 export default function Features() {
   type ImageKey = 'item-1' | 'item-2' | 'item-3' | 'item-4';
@@ -72,21 +73,8 @@ export default function Features() {
           <div className="bg-background relative flex overflow-hidden rounded-3xl border p-2">
             <div className="bg-background relative w-full rounded-2xl">
               <AnimatePresence mode="wait">
-                <motion.div
-                  key={`${activeItem}-id`}
-                  initial={{ opacity: 0, y: 6, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 6, scale: 0.98 }}
-                  transition={{ duration: 0.2 }}
-                  className="relative w-full overflow-hidden rounded-2xl border bg-zinc-900 shadow-md aspect-[16/9]"
-                >
-                  <Image
-                    src={images[activeItem].image}
-                    alt={images[activeItem].alt}
-                    fill
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-cover object-left-top dark:mix-blend-lighten"
-                  />
+                <motion.div key={`${activeItem}-id`} initial={{ opacity: 0, y: 6, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 6, scale: 0.98 }} transition={{ duration: 0.2 }} className="relative w-full overflow-hidden rounded-2xl border bg-zinc-900 shadow-md aspect-[16/9]">
+                  <Image src={images[activeItem].image} alt={images[activeItem].alt} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover object-left-top dark:mix-blend-lighten" />
                 </motion.div>
               </AnimatePresence>
             </div>
