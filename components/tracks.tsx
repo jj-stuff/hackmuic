@@ -5,7 +5,6 @@ import { HeartPulse, PiggyBank, Leaf, GraduationCap } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MorphingText } from '@/components/ui/morphing-text';
 
 export default function Features() {
   type ImageKey = 'item-1' | 'item-2' | 'item-3' | 'item-4';
