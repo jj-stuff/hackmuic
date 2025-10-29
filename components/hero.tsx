@@ -1,15 +1,23 @@
 import React from 'react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import { HeaderSectionTwo } from './header-2';
 import Coin3D from '@/components/coin3d';
-import { siteCtas } from '@/lib/site-config';
+import { siteCtas, hackathonDetails } from '@/lib/site-config';
 import TypewriterText from '@/components/ui/TypewriterText';
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
 import { CountdownTimer } from '@/components/ui/countdown-timer';
 
+/**
+ * HeroSection
+ *
+ * Top of the homepage with title, event metadata, CTA, 3D coin and countdown.
+ * Reads all dynamic copy and dates from site-config for consistency and future CMS.
+ */
 export default function HeroSection() {
   const { label, href } = siteCtas.apply;
+  const eventTagline = `${hackathonDetails.date} | ${hackathonDetails.locationShort ?? hackathonDetails.location}`;
+  const regClose = hackathonDetails.registrationClosesAt;
+  const eventStart = hackathonDetails.eventStartsAt;
 
   return (
     <>
@@ -22,11 +30,10 @@ export default function HeroSection() {
               <div data-hero-text className="mx-auto max-w-lg text-center lg:ml-0 lg:w-1/2 lg:text-left">
                 <h1 className="mt-8 max-w-2xl text-balance text-5xl font-medium md:text-6xl lg:mt-16 xl:text-7xl text-white">HACKMUIC 2025-2026</h1>
                 <p className="mt-8 max-w-2xl text-pretty text-lg text-white ">
-                  <TypewriterText>November 13th, 2025 | MUIC Campus</TypewriterText>
+                  <TypewriterText>{eventTagline}</TypewriterText>
                 </p>
 
                 <div className="mt-12 flex flex-col items-center justify-center gap-2 sm:flex-row lg:justify-start">
-                  <Button asChild size="lg" className="px-5 text-base"></Button>
                   <InteractiveHoverButton>
                     <Link href={href}>
                       <span className="text-nowrap">{label}</span>
@@ -38,11 +45,11 @@ export default function HeroSection() {
               <Coin3D />
             </div>
             <div className="mt-10 w-full sm:px-1 md:px-6 md:hidden">
-              <CountdownTimer size="compact" />
+              <CountdownTimer size="compact" registrationClosesAt={regClose} eventStartsAt={eventStart} />
             </div>
           </div>
           <div className="pointer-events-none absolute inset-x-0 bottom-[18%] hidden justify-center px-4 sm:bottom-[14%] md:bottom-[12%] lg:bottom-[20%] lg:flex">
-            <CountdownTimer />
+            <CountdownTimer registrationClosesAt={regClose} eventStartsAt={eventStart} />
           </div>
         </section>
       </main>

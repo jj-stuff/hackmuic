@@ -1,4 +1,4 @@
-const placeholderAvatar = 'https://cdn-icons-png.flaticon.com/256/8013/8013505.png';
+const placeholderAvatar = 'https://www.cincinnatichildrens.org/-/media/Cincinnati-Childrens/Global-Shared/Biographies/_setup/default-profile-image-not-available.jpg';
 
 const sections = [
   {
@@ -44,7 +44,7 @@ const sections = [
 
 export default function TeamSection() {
   return (
-    <section className="py-12 md:py-32">
+    <section className="py-12 md:py-32 px-12">
       <div className="mx-auto max-w-6xl px-6 lg:px-0">
         <h2 className="mb-8 text-4xl font-bold md:mb-16 lg:text-5xl">Our team</h2>
 

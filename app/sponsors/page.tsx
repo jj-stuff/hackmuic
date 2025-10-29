@@ -3,6 +3,14 @@ import { hackathonDetails } from '@/lib/site-config';
 import { HeaderSectionTwo } from '@/components/header-2';
 import FooterSection from '@/components/footer';
 
+/**
+ * SponsorsPage
+ *
+ * Landing page for prospective sponsors with key event details and a simple
+ * interest form. All copy and dates are sourced from site-config to keep
+ * content consistent and ready for a CMS.
+ */
+
 const SponsorsPage = () => {
   return (
     <>

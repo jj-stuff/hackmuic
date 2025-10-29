@@ -1,7 +1,22 @@
 import Link from 'next/link';
+import type { ReactElement } from 'react';
 import { FaLinkedinIn, FaDiscord, FaInstagram, FaTiktok } from 'react-icons/fa6';
+import { policies, siteSocials } from '@/lib/site-config';
 
+/**
+ * FooterSection
+ *
+ * Renders brand wordmark, social links, and policy links.
+ * Social URLs are centralized in site-config for consistency / CMS handoff.
+ */
 export default function FooterSection() {
+  const iconByKey: Record<string, ReactElement> = {
+    instagram: <FaInstagram className="h-6 w-6" />,
+    tiktok: <FaTiktok className="h-6 w-6" />,
+    linkedin: <FaLinkedinIn className="h-6 w-6" />,
+    discord: <FaDiscord className="h-6 w-6" />,
+  };
+
   return (
     <footer className="py-16 md:py-32 border-t border-muted">
       <div className="mx-auto max-w-6xl px-6 flex flex-col md:flex-row items-center justify-between gap-8">
@@ -12,25 +27,24 @@ export default function FooterSection() {
         <div className="flex flex-col items-center md:items-end gap-4 text-sm">
           {/* Social Links */}
           <div className="flex gap-4">
-            <Link href="https://www.instagram.com/hack.muic/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-muted-foreground hover:text-primary">
-              <FaInstagram className="h-6 w-6" />
-            </Link>
-
-            <Link href="https://www.tiktok.com/@hackmuic" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="text-muted-foreground hover:text-primary">
-              <FaTiktok className="h-6 w-6" />
-            </Link>
-
-            <Link href="https://www.linkedin.com/company/hack-muic/" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="text-muted-foreground hover:text-primary">
-              <FaLinkedinIn className="h-6 w-6" />
-            </Link>
-
-            <Link href="#" target="_blank" rel="noopener noreferrer" aria-label="Discord" className="text-muted-foreground hover:text-primary">
-              <FaDiscord className="h-6 w-6" />
-            </Link>
+            {Object.entries(siteSocials)
+              .filter(([, url]) => !!url)
+              .map(([key, url]) => (
+                <Link
+                  key={key}
+                  href={url as string}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={key}
+                  className="text-muted-foreground hover:text-primary"
+                >
+                  {iconByKey[key]}
+                </Link>
+              ))}
           </div>
 
           {/* Code of Conduct */}
-          <Link href="https://muic.mahidol.ac.th/eng/student-life/students-activities/code-of-student-conduct/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary underline">
+          <Link href={policies.codeOfConductUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary underline">
             MUIC Code of Conduct
           </Link>
 

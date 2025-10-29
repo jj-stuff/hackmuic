@@ -3,8 +3,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
 
-const HACKMUIC_START = new Date('2025-11-06T16:59:00Z');
-
 type TimeParts = {
   days: number;
   hours: number;
@@ -34,17 +32,64 @@ function pad(num: number) {
   return num.toString().padStart(2, '0');
 }
 
+/**
+ * CountdownTimer
+ *
+ * Generic, reusable countdown component. Provide a `target` date
+ * (Date or ISO string). If omitted, it renders a placeholder state.
+ */
 type CountdownTimerProps = {
   className?: string;
   size?: 'default' | 'compact';
+  /** Registration close target (Date instance or ISO string). */
+  registrationClosesAt?: Date | string;
+  /** Event start target (Date instance or ISO string). */
+  eventStartsAt?: Date | string;
+  /** Optional headings for each phase; defaults provided. */
+  headingRegistration?: string;
+  headingEvent?: string;
 };
 
-export function CountdownTimer({ className, size = 'default' }: CountdownTimerProps) {
+export function CountdownTimer({
+  className,
+  size = 'default',
+  registrationClosesAt,
+  eventStartsAt,
+  headingRegistration = 'Registration Closes In',
+  headingEvent = 'Event Starts In',
+}: CountdownTimerProps) {
   const [timeParts, setTimeParts] = useState<TimeParts | null>(null);
+  const [phase, setPhase] = useState<'registration' | 'event' | 'past'>('registration');
 
   useEffect(() => {
     const updateTime = () => {
-      setTimeParts(calculateTimeParts(HACKMUIC_START));
+      const now = Date.now();
+
+      const regDate = registrationClosesAt
+        ? typeof registrationClosesAt === 'string'
+          ? new Date(registrationClosesAt)
+          : registrationClosesAt
+        : undefined;
+      const eventDate = eventStartsAt
+        ? typeof eventStartsAt === 'string'
+          ? new Date(eventStartsAt)
+          : eventStartsAt
+        : undefined;
+
+      if (regDate && now < regDate.getTime()) {
+        setPhase('registration');
+        setTimeParts(calculateTimeParts(regDate));
+        return;
+      }
+
+      if (eventDate && now < eventDate.getTime()) {
+        setPhase('event');
+        setTimeParts(calculateTimeParts(eventDate));
+        return;
+      }
+
+      setPhase('past');
+      setTimeParts({ days: 0, hours: 0, minutes: 0, seconds: 0, isPast: true });
     };
 
     updateTime();
@@ -52,7 +97,7 @@ export function CountdownTimer({ className, size = 'default' }: CountdownTimerPr
     const timer = window.setInterval(updateTime, 1000);
 
     return () => window.clearInterval(timer);
-  }, []);
+  }, [registrationClosesAt, eventStartsAt]);
 
   const entries = useMemo(
     () =>
@@ -84,9 +129,16 @@ export function CountdownTimer({ className, size = 'default' }: CountdownTimerPr
 
   const labelClasses = size === 'compact' ? 'text-[0.55rem] uppercase tracking-[0.32em] text-muted-foreground/70' : 'text-[0.65rem] uppercase tracking-[0.4em] text-muted-foreground/70 sm:text-xs';
 
+  const headingText = useMemo(() => {
+    if (size === 'compact') return undefined;
+    if (phase === 'registration') return headingRegistration;
+    if (phase === 'event') return headingEvent;
+    return undefined;
+  }, [phase, size, headingRegistration, headingEvent]);
+
   return (
     <div className={cn(containerClasses, className)}>
-      {headingClasses ? <span className={headingClasses}>Registration Closes In</span> : null}
+      {headingClasses && headingText ? <span className={headingClasses}>{headingText}</span> : null}
       {timeParts?.isPast ? (
         <span className="text-2xl font-semibold text-foreground">Good Luck!</span>
       ) : (
@@ -104,5 +156,3 @@ export function CountdownTimer({ className, size = 'default' }: CountdownTimerPr
 }
 
 CountdownTimer.displayName = 'CountdownTimer';
-
-export { HACKMUIC_START };
