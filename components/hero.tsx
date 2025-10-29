@@ -6,6 +6,7 @@ import Coin3D from '@/components/coin3d';
 import { siteCtas } from '@/lib/site-config';
 import TypewriterText from '@/components/ui/TypewriterText';
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
+import { CountdownTimer } from '@/components/ui/countdown-timer';
 
 export default function HeroSection() {
   const { label, href } = siteCtas.apply;
@@ -37,6 +38,12 @@ export default function HeroSection() {
               {/* --- Replaced Image with Spline --- */}
               <Coin3D />
             </div>
+            <div className="mt-10 w-full px-6 md:hidden">
+              <CountdownTimer size="compact" />
+            </div>
+          </div>
+          <div className="pointer-events-none absolute inset-x-0 bottom-[18%] hidden justify-center px-4 sm:bottom-[14%] md:bottom-[12%] lg:bottom-[20%] md:flex">
+            <CountdownTimer className="pointer-events-auto max-w-md sm:max-w-xl" />
           </div>
         </section>
       </main>

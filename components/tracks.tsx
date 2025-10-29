@@ -13,7 +13,7 @@ export default function Features() {
 
   const images = {
     'item-1': { image: '/tracks/healthcare.jpg', alt: 'Healthcare Technology' },
-    'item-2': { image: '/tracks/fintech.webp', alt: 'Fintech Innovation' },
+    'item-2': { image: '/tracks/fintech.jpg', alt: 'Fintech Innovation' },
     'item-3': { image: '/tracks/sustainability.jpg', alt: 'Sustainability Solutions' },
     'item-4': { image: '/tracks/education.jpg', alt: 'Education Innovation' },
   };

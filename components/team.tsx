@@ -2,36 +2,42 @@ const placeholderAvatar = 'https://cdn-icons-png.flaticon.com/256/8013/8013505.p
 
 const sections = [
   {
-    title: 'Leadership',
+    title: 'Executives',
     members: [
-      { name: 'Leadership Member 1', role: 'Founder', avatar: 'team/blim.jpg' },
-      { name: 'Leadership Member 2', role: 'Operations', avatar: placeholderAvatar },
-      { name: 'Leadership Member 3', role: 'Strategy', avatar: placeholderAvatar },
-      { name: 'Leadership Member 4', role: 'Finance', avatar: placeholderAvatar },
-      { name: 'Leadership Member 5', role: 'People', avatar: placeholderAvatar },
-      { name: 'Leadership Member 6', role: 'Partnerships', avatar: placeholderAvatar },
+      { name: 'Pim', role: 'Lead Engineer', avatar: placeholderAvatar },
+      { name: 'Phu', role: 'Frontend', avatar: placeholderAvatar },
+      { name: 'Nanar', role: 'Backend', avatar: placeholderAvatar },
+      { name: 'Krit', role: 'Mobile', avatar: placeholderAvatar },
     ],
   },
   {
-    title: 'Engineering',
+    title: 'Project Managers',
     members: [
-      { name: 'Engineering Member 1', role: 'Lead Engineer', avatar: placeholderAvatar },
-      { name: 'Engineering Member 2', role: 'Frontend', avatar: placeholderAvatar },
-      { name: 'Engineering Member 3', role: 'Backend', avatar: placeholderAvatar },
-      { name: 'Engineering Member 4', role: 'Mobile', avatar: placeholderAvatar },
-      { name: 'Engineering Member 5', role: 'Infrastructure', avatar: placeholderAvatar },
-      { name: 'Engineering Member 6', role: 'QA', avatar: placeholderAvatar },
+      { name: 'Blimmy', role: 'PM', avatar: 'team/blim.jpg' },
+      { name: 'Kong', role: 'PM', avatar: placeholderAvatar },
+      { name: 'Jump', role: 'PM', avatar: placeholderAvatar },
+      { name: 'Ink', role: 'PM', avatar: placeholderAvatar },
+      { name: 'Marc', role: 'PM', avatar: placeholderAvatar },
     ],
   },
   {
-    title: 'Marketing',
+    title: 'Public Relations',
     members: [
-      { name: 'Marketing Member 1', role: 'Project Manager', avatar: placeholderAvatar },
-      { name: 'Marketing Member 2', role: 'Growth', avatar: placeholderAvatar },
-      { name: 'Marketing Member 3', role: 'Content', avatar: placeholderAvatar },
-      { name: 'Marketing Member 4', role: 'Design', avatar: placeholderAvatar },
-      { name: 'Marketing Member 5', role: 'Community', avatar: placeholderAvatar },
-      { name: 'Marketing Member 6', role: 'Partnerships', avatar: placeholderAvatar },
+      { name: 'Ploy', role: 'Social Media', avatar: placeholderAvatar },
+      { name: 'Tanvi', role: 'Social Media', avatar: placeholderAvatar },
+      { name: 'Pooh', role: 'Social Media', avatar: placeholderAvatar },
+      { name: 'Freshy', role: 'Social Media', avatar: placeholderAvatar },
+    ],
+  },
+  {
+    title: 'Media',
+    members: [
+      { name: 'Tawan', role: 'Graphics Designer', avatar: placeholderAvatar },
+      { name: 'Lily', role: 'Graphics Designer', avatar: placeholderAvatar },
+      { name: 'Thann', role: 'Video Editor', avatar: placeholderAvatar },
+      { name: 'Ohm', role: 'Video Editor', avatar: placeholderAvatar },
+      { name: 'Poom', role: 'Photographer', avatar: placeholderAvatar },
+      { name: 'Earth', role: 'Photographer', avatar: placeholderAvatar },
     ],
   },
 ];
