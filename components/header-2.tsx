@@ -1,9 +1,10 @@
 'use client';
 
-import Link from 'next/link';
 import React from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
@@ -28,7 +29,7 @@ const darkColors = {
 };
 
 const lightColors = {
-  background: 'rgba(240, 230, 255, 0.84)',
+  background: 'rgba(250, 232, 253, 0.77)',
   border: 'rgba(160, 70, 255, 0.2)',
   mutedBorder: 'rgba(128, 0, 255, 0.15)',
   text: '#2d0033',
@@ -38,14 +39,13 @@ const lightColors = {
 };
 
 export const HeaderSectionTwo = () => {
+  const { resolvedTheme } = useTheme();
   const [isHovered, setIsHovered] = React.useState(false);
-  const [cardTheme, setCardTheme] = React.useState<'dark' | 'light'>('dark');
   const [menuState, setMenuState] = React.useState(false);
 
-  const colors = cardTheme === 'dark' ? darkColors : lightColors;
+  const colors = resolvedTheme === 'light' ? lightColors : darkColors;
   const { label, href } = siteCtas.apply;
 
-  const toggleCardTheme = () => setCardTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   const closeMenu = () => setMenuState(false);
   const isOpen = isHovered || menuState;
 
@@ -54,7 +54,7 @@ export const HeaderSectionTwo = () => {
       <motion.nav
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="pointer-events-auto relative w-full max-w-xl"
+        className="pointer-events-auto relative w-full max-w-lg"
         style={{
           borderRadius: 24,
           backdropFilter: 'blur(16px)',
@@ -85,13 +85,10 @@ export const HeaderSectionTwo = () => {
           <div className="flex items-center gap-3 lg:hidden">
             <Button asChild size="sm" variant="secondary" className="border border-transparent bg-white/10 backdrop-blur">
               <Link href={href}>
-                <span className="text-nowrap">{label}</span>
+                <span className="text-nowrap text-foreground">{label}</span>
               </Link>
             </Button>
             <ThemeToggle />
-            <button onClick={() => setMenuState((prev) => !prev)} aria-label={menuState ? 'Close menu' : 'Open menu'} className="rounded-full border border-white/20 p-2 transition hover:border-white/40" style={{ color: colors.text, borderColor: colors.mutedBorder }}>
-              {menuState ? <X className="size-5" /> : <Menu className="size-5" />}
-            </button>
           </div>
         </div>
 
@@ -99,9 +96,20 @@ export const HeaderSectionTwo = () => {
           {isOpen && (
             <motion.div key="menu-panel" layout initial={{ opacity: 0, height: 0, y: -12 }} animate={{ opacity: 1, height: 'auto', y: 0 }} exit={{ opacity: 0, height: 0, y: -12 }} transition={{ duration: 0.35, ease: 'easeInOut' }} className="overflow-hidden border-t px-5 pb-5 pt-2" style={{ borderColor: colors.mutedBorder }}>
               <div className="flex flex-col items-center gap-5 text-center lg:hidden">
-                <nav className="flex w-full flex-col gap-4 text-lg font-semibold tracking-wide">
+                <nav className="flex w-full flex-col gap-4 text-2xl font-semibold tracking-wide">
                   {menuItems.map((item) => (
-                    <Link key={item.name} href={item.href} onClick={closeMenu} className="transition-colors duration-200 hover:underline" style={{ color: colors.text }}>
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={closeMenu}
+                      className="transition-colors duration-200 hover:underline"
+                      style={{
+                        color: colors.text,
+                        textDecorationStyle: 'wavy',
+                        textDecorationColor: colors.accent,
+                        textUnderlineOffset: 6,
+                      }}
+                    >
                       {item.name}
                     </Link>
                   ))}
@@ -111,7 +119,17 @@ export const HeaderSectionTwo = () => {
               <div className="hidden flex-col items-center gap-6 text-center lg:flex">
                 <nav className="flex w-full flex-col items-center gap-4 text-lg font-semibold tracking-wide">
                   {menuItems.map((item) => (
-                    <Link key={item.name} href={item.href} className="transition-colors duration-200 hover:underline" style={{ color: colors.text }}>
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="transition-colors duration-200 hover:underline"
+                      style={{
+                        color: colors.text,
+                        textDecorationStyle: 'wavy',
+                        textDecorationColor: colors.accent,
+                        textUnderlineOffset: 6,
+                      }}
+                    >
                       {item.name}
                     </Link>
                   ))}
