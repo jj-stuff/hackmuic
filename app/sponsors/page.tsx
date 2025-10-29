@@ -1,12 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { hackathonDetails } from '@/lib/site-config';
-import { HeaderSection } from '@/components/header';
+import { HeaderSectionTwo } from '@/components/header-2';
 import FooterSection from '@/components/footer';
 
 const SponsorsPage = () => {
   return (
     <>
-      <HeaderSection />
+      <HeaderSectionTwo />
       <main className="mx-auto w-full max-w-4xl px-6 py-24">
         <header className="space-y-6 text-center md:text-left">
           <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">{hackathonDetails.name}</h1>
