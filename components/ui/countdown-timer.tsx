@@ -40,27 +40,39 @@ type CountdownTimerProps = {
 };
 
 export function CountdownTimer({ className, size = 'default' }: CountdownTimerProps) {
-  const [timeParts, setTimeParts] = useState<TimeParts>(() => calculateTimeParts(HACKMUIC_START));
+  const [timeParts, setTimeParts] = useState<TimeParts | null>(null);
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
+    const updateTime = () => {
       setTimeParts(calculateTimeParts(HACKMUIC_START));
-    }, 1000);
+    };
+
+    updateTime();
+
+    const timer = window.setInterval(updateTime, 1000);
 
     return () => window.clearInterval(timer);
   }, []);
 
   const entries = useMemo(
-    () => [
-      { label: 'Days', value: pad(timeParts.days) },
-      { label: 'Hours', value: pad(timeParts.hours) },
-      { label: 'Minutes', value: pad(timeParts.minutes) },
-      { label: 'Seconds', value: pad(timeParts.seconds) },
-    ],
-    [timeParts.days, timeParts.hours, timeParts.minutes, timeParts.seconds]
+    () =>
+      timeParts
+        ? [
+            { label: 'Days', value: pad(timeParts.days) },
+            { label: 'Hours', value: pad(timeParts.hours) },
+            { label: 'Minutes', value: pad(timeParts.minutes) },
+            { label: 'Seconds', value: pad(timeParts.seconds) },
+          ]
+        : [
+            { label: 'Days', value: '--' },
+            { label: 'Hours', value: '--' },
+            { label: 'Minutes', value: '--' },
+            { label: 'Seconds', value: '--' },
+          ],
+    [timeParts]
   );
 
-  const containerClasses = size === 'compact' ? 'inline-flex w-full flex-col items-center gap-3 rounded-xl border border-border/40 bg-background/70 px-4 py-4 text-xs text-muted-foreground shadow backdrop-blur' : 'inline-flex w-full max-w-xl flex-col items-center gap-5 rounded-2xl border border-border/40 bg-background/60 px-6 py-6 text-sm text-muted-foreground shadow-lg backdrop-blur ';
+  const containerClasses = size === 'compact' ? 'mx-auto flex w-80 flex-col items-center gap-3 rounded-xl border border-border/40 bg-background/60 px-2 py-4 text-xs text-muted-foreground shadow backdrop-blur' : 'inline-flex w-full max-w-xl flex-col items-center gap-5 rounded-2xl border border-border/40 bg-background/60 px-6 py-6 text-sm text-muted-foreground shadow-lg backdrop-blur ';
 
   const headingClasses = size === 'compact' ? undefined : 'text-[1rem] uppercase tracking-[0.8em] text-grey sm:text-xs';
 
@@ -75,7 +87,7 @@ export function CountdownTimer({ className, size = 'default' }: CountdownTimerPr
   return (
     <div className={cn(containerClasses, className)}>
       {headingClasses ? <span className={headingClasses}>Registration Closes In</span> : null}
-      {timeParts.isPast ? (
+      {timeParts?.isPast ? (
         <span className="text-2xl font-semibold text-foreground">Good Luck!</span>
       ) : (
         <div className={entriesWrapperClasses}>
