@@ -41,7 +41,7 @@ export default function HeroSection() {
               <CountdownTimer size="compact" />
             </div>
           </div>
-          <div className="pointer-events-none absolute inset-x-0 bottom-[18%] hidden justify-center px-4 sm:bottom-[14%] md:bottom-[12%] lg:bottom-[20%] md:flex">
+          <div className="pointer-events-none absolute inset-x-0 bottom-[18%] hidden justify-center px-4 sm:bottom-[14%] md:bottom-[12%] lg:bottom-[20%] lg:flex">
             <CountdownTimer />
           </div>
         </section>
