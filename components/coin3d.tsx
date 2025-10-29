@@ -9,7 +9,11 @@ const COIN_RADIUS = 1;
 const COIN_THICKNESS = 0.1;
 const COIN_SCALE = 0.55;
 
-function CoinMesh() {
+type CoinMeshProps = {
+  scale: number;
+};
+
+function CoinMesh({ scale }: CoinMeshProps) {
   // useLoader infers the return type from loader, here TextureLoader → THREE.Texture
   const logoTexture = useLoader(THREE.TextureLoader, '/logo/muic-noname.png');
 
@@ -31,19 +35,6 @@ function CoinMesh() {
     groupRef.current.rotation.set(Math.PI / 2 - 1 + tilt, spin.current, Math.sin(spin.current * 0.9) * 0.12);
   });
 
-  const [scale, setScale] = useState(COIN_SCALE);
-
-  useEffect(() => {
-    const updateScale = () => {
-      setScale(window.innerWidth < 1024 ? 1.1 : COIN_SCALE);
-    };
-
-    updateScale();
-    window.addEventListener('resize', updateScale);
-
-    return () => window.removeEventListener('resize', updateScale);
-  }, []);
-
   return (
     <group ref={groupRef} position={[0, 0.18, 0]} scale={scale}>
       <mesh>
@@ -58,9 +49,51 @@ function CoinMesh() {
 }
 
 export default function HeroCoin() {
+  const [scale, setScale] = useState(COIN_SCALE);
+  const [topOffset, setTopOffset] = useState<number | null>(null);
+
+  useEffect(() => {
+    const updateMeasurements = () => {
+      const width = window.innerWidth;
+
+      if (width < 1024) {
+        setScale(1.1);
+        setTopOffset(null);
+        return;
+      }
+
+      if (width >= 1600) {
+        // ease the coin back slightly on very wide monitors so it stays within the hero frame
+        setScale(0.5);
+      } else {
+        setScale(COIN_SCALE);
+      }
+
+      const wrapper = document.querySelector<HTMLElement>('[data-hero-wrapper]');
+      const text = document.querySelector<HTMLElement>('[data-hero-text]');
+
+      if (wrapper && text) {
+        const wrapperRect = wrapper.getBoundingClientRect();
+        const textRect = text.getBoundingClientRect();
+        setTopOffset(textRect.top - wrapperRect.top - 120);
+      } else {
+        setTopOffset(null);
+      }
+    };
+
+    const raf = window.requestAnimationFrame(updateMeasurements);
+    updateMeasurements();
+    window.addEventListener('resize', updateMeasurements);
+
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener('resize', updateMeasurements);
+    };
+  }, []);
+
   return (
-    <div className="pointer-events-none z-0 order-first mx-auto h-[22rem] w-full max-w-[24rem] sm:h-[26rem] sm:max-w-[28rem] md:h-[30rem] md:max-w-[32rem] lg:absolute lg:inset-0 lg:-right-20 lg:-top-72 lg:order-last lg:mx-0 lg:ml-auto lg:h-[110%] lg:w-4/7 lg:max-w-none">
-      <div className="relative mx-auto h-full w-full max-w-[28rem]">
+    <div className="pointer-events-none z-0 order-first mx-auto h-[22rem] w-full max-w-[24rem] sm:h-[26rem] sm:max-w-[28rem] md:h-[30rem] md:max-w-[32rem] lg:absolute lg:-right-20 lg:top-0 lg:order-last lg:mx-0 lg:ml-auto lg:h-[36rem] lg:w-4/7 lg:max-w-none xl:h-[40rem]" style={topOffset !== null ? { top: topOffset } : undefined}>
+      <div className="relative mx-auto h-full w-full max-w-[28rem] lg:max-w-[36rem] xl:max-w-[42rem]">
         <Canvas
           className="h-full w-full"
           shadows={false}
@@ -77,7 +110,7 @@ export default function HeroCoin() {
           }}
         >
           <Suspense fallback={null}>
-            <CoinMesh />
+            <CoinMesh scale={scale} />
           </Suspense>
         </Canvas>
       </div>
